@@ -10,13 +10,15 @@
 $(document).ready(() => {
 
   const url = "https://api.thecatapi.com/v1/images/search?460e3088-2a9c-452d-a088-ccbfd2686a96"
+  for(let i=0; i < 4; i++){
 
-  $.ajax({
-    type: "GET",
-    url,
-    success: loadCats,
-    // error,
+    $.ajax({
+      type: "GET",
+      url,
+      success: loadCats,
+      // error,
   })
+}
 
 
 })
@@ -26,7 +28,7 @@ $(document).ready(() => {
 function loadCats(data){
   console.log(data);
 
-  let kittyContainer = `<div class="kitty-container"><img src="${data[0]["url"]}"></img>></div>`
+  let kittyContainer = `<div class="kitty-container"><img src="${data[0]["url"]}"></div>`
 
   $("#kitty-area").append(kittyContainer);
 
