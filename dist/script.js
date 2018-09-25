@@ -5,25 +5,21 @@
 // Here's your user_id
 
 // uf31v0
+page("/", loadCats);
+  page("favs", favs)
 
 
 $(document).ready(() => {
-
+ 
   const url = "https://api.thecatapi.com/v1/images/search?460e3088-2a9c-452d-a088-ccbfd2686a96"
   for(let i=0; i < 4; i++){
-
     $.ajax({
       type: "GET",
       url,
       success: loadCats,
-      // error,
-  })
-}
-
-
+    })
+  }
 })
-
-// data[0]["url"]
 
 function loadCats(data){
   console.log(data);
@@ -32,4 +28,8 @@ function loadCats(data){
 
   $("#kitty-area").append(kittyContainer);
 
+}
+
+function favs(){
+  console.log("favs")
 }
