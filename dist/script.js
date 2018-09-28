@@ -13,19 +13,9 @@ console.log(favsLocalStorage)
 
 $(document).ready(() => {
 
-  // $("#"+favsLocalStorage).addClass("liked");
-
   page("/", ajaxRandomCats);
   page("/favs", ajaxFavCats);
   page();
-
-  // function index() {
-  //   $("#kitty-area").html(ajaxRandomCats());
-  // }
-
-  // function favs() {
-  //   $("#kitty-area").html(ajaxFavCats());
-  // }
   
   function ajaxRandomCats(){
     for(let i=0; i < 4; i++){
@@ -39,7 +29,8 @@ $(document).ready(() => {
 
   function getCats(data){
     console.log(data);
-  
+    $(".favs-kitty-container").hide();
+
     let kittyContainer = `<div class="kitty-container" id="parent-${data[0]["id"]}"><img src="${data[0]["url"]}"><i id="${data[0]["id"]}" onclick="clickLike(this)" class="icon-heart like"></i></div>`
   
     $("#kitty-area").append(kittyContainer);
@@ -58,7 +49,7 @@ $(document).ready(() => {
 
   function favPages(data) {
     let favsKittyContainer = `<div class="favs-kitty-container" id="parent-${data["id"]}"><img src="${data["url"]}"><i id="${data["id"]}" onclick="clickLike(this)" class="icon-heart like liked"></i></div>`
-  
+    $(".kitty-container").hide();
     $("#kitty-area").append(favsKittyContainer);
   }
 
