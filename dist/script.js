@@ -6,7 +6,12 @@
 
 // uf31v0
 
+const favsLocalStorage = localStorage.getItem("id");
+
 $(document).ready(() => {
+
+  $("#"+favsLocalStorage).addClass("liked");
+
 
   const url = "https://api.thecatapi.com/v1/images/search?460e3088-2a9c-452d-a088-ccbfd2686a96" 
 
@@ -27,7 +32,7 @@ $(document).ready(() => {
   function getCats(data){
     console.log(data);
   
-    let kittyContainer = `<div class="kitty-container" id="parent-${data[0]["id"]}"><img src="${data[0]["url"]}"><i id="${data[0]["id"]}" onclick="clickLike()" class="icon-heart like"></i></div>`
+    let kittyContainer = `<div class="kitty-container" id="parent-${data[0]["id"]}"><img src="${data[0]["url"]}"><i id="${data[0]["id"]}" onclick="clickLike(this)" class="icon-heart like"></i></div>`
   
     $("#kitty-area").append(kittyContainer);
   }
@@ -38,10 +43,21 @@ $(document).ready(() => {
 
 })
 
-function clickLike(){
-  let catId = $(".like").attr("id")
-  localStorage.setItem("id", catId)
+function clickLike(icon){
+  let catId = $(icon).attr("id");
+  let jqCatID = "#"+catId;
+
+  localStorage.setItem("id", catId);
+
+  $(jqCatID).toggleClass("liked");
+
+  if ( !$(jqCatID).hasClass("liked") ){
+    localStorage.removeItem("id");
+  }
+
 }
+
+
 
 // localStorage.setItem("id", catId)
 
