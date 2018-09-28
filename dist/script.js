@@ -12,10 +12,10 @@ const favsLocalStorage = localStorage.getItem("id");
 
 $(document).ready(() => {
 
-  $("#"+favsLocalStorage).addClass("liked");
+  // $("#"+favsLocalStorage).addClass("liked");
 
   page("/", ajaxRandomCats);
-  page("/favs", ajaxFavCats);
+  // page("/favs", ajaxFavCats);
   page();
 
   // function index() {
@@ -44,36 +44,62 @@ $(document).ready(() => {
     $("#kitty-area").append(kittyContainer);
   }
 
-  function ajaxFavCats(){
-    $.ajax({
-      type: "GET",
-      url: favUrl + favsLocalStorage,
-      success: favPages
-    })
-  }
+  // function ajaxFavCats(){
+  //   $.ajax({
+  //     type: "GET",
+  //     url: favUrl + favsLocalStorage,
+  //     success: favPages
+  //   })
+  // }
 
-  console.log(favUrl + favsLocalStorage)
-
-  function favPages(data) {
-    console.log(data);
-    let favsKittyContainer = `<div class="favs-kitty-container" id="parent-${data["id"]}"><img src="${data["url"]}"><i id="${data["id"]}" onclick="clickLike(this)" class="icon-heart like liked"></i></div>`
+  // function favPages(data) {
+  //   console.log(data);
+  //   let favsKittyContainer = `<div class="favs-kitty-container" id="parent-${data["id"]}"><img src="${data["url"]}"><i id="${data["id"]}" onclick="clickLike(this)" class="icon-heart like liked"></i></div>`
   
-    $("#kitty-area").append(favsKittyContainer);
-  }
+  //   $("#kitty-area").append(favsKittyContainer);
+  // }
 
 })
 
 function clickLike(icon){
+  icon.classList.toggle("liked");
+  let getFavs = JSON.parse(localStorage.getItem("id"));
   let catId = $(icon).attr("id");
-  let jqCatID = "#"+catId;
+  // let jqCatID = "#" + catId;
+  let newFavs
 
-  localStorage.setItem("id", catId);
+  if (getFavs) {
+    let index = getFavs.findIndex( value => value === catId );
 
-  $(jqCatID).toggleClass("liked");
+    if ( index >= 0 ){
+      newFavs = [ ...getFavs];
+      newFavs.splice(index, 1);
+    } else{
+      newFavs = [
+        ...getFavs,
+        catId
+      ]
+    }
 
-  if ( !$(jqCatID).hasClass("liked") ){
-    localStorage.removeItem("id");
+  } else {
+    newFavs = [
+      catId
+    ]
   }
+
+  localStorage.setItem("id", JSON.stringify(newFavs));
+
+ 
+
+
+  // let jqCatID = "#"+catId;
+
+
+  // $(jqCatID).toggleClass("liked");
+
+  // if ( !$(jqCatID).hasClass("liked") ){
+  //   localStorage.removeItem("id");
+  // }
 }
 
 
