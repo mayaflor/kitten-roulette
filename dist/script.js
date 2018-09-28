@@ -6,24 +6,23 @@
 
 // uf31v0
 
+const randomUrl = "https://api.thecatapi.com/v1/images/search?460e3088-2a9c-452d-a088-ccbfd2686a96" 
+const favUrl = "https://api.thecatapi.com/v1/images/" 
 const favsLocalStorage = localStorage.getItem("id");
 
 $(document).ready(() => {
 
   $("#"+favsLocalStorage).addClass("liked");
 
-
-  const url = "https://api.thecatapi.com/v1/images/search?460e3088-2a9c-452d-a088-ccbfd2686a96" 
-
-  page("/", one);
-  page("/favs", favs);
+  page("/", ajaxRandomCats);
+  page("/favs", ajaxFavCats);
   page();
   
- function one(){
+ function ajaxRandomCats(){
     for(let i=0; i < 4; i++){
       $.ajax({
         type: "GET",
-        url,
+        url: randomUrl,
         success: getCats
       })
     }
@@ -37,8 +36,21 @@ $(document).ready(() => {
     $("#kitty-area").append(kittyContainer);
   }
 
-  function favs(){
-    console.log("favs")
+  function ajaxFavCats(){
+    $.ajax({
+      type: "GET",
+      url: favUrl + favsLocalStorage,
+      success: favPages
+    })
+  }
+
+  console.log(favUrl + favsLocalStorage)
+
+  function favPages(data) {
+    console.log(data);
+    let favsKittyContainer = `<div class="favs-kitty-container" id="parent-${data["id"]}"><img src="${data["url"]}"><i id="${data["id"]}" onclick="clickLike(this)" class="icon-heart like liked"></i></div>`
+  
+    $("#kitty-area").append(favsKittyContainer);
   }
 
 })
@@ -54,14 +66,7 @@ function clickLike(icon){
   if ( !$(jqCatID).hasClass("liked") ){
     localStorage.removeItem("id");
   }
-
 }
 
 
-
-// localStorage.setItem("id", catId)
-
-// localStorage.getItem("id")
-
-// localStorage.removeItem("id")
 
