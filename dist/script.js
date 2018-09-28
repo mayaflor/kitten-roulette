@@ -8,9 +8,13 @@ $(document).ready(() => {
   page();
 
 })
+
+$("#more").click(function() {
+  ajaxRandomCats();
+})
   
 function ajaxRandomCats(){
-  for(let i=0; i < 4; i++){
+  for(let i=0; i < 10; i++){
     $.ajax({
       type: "GET",
       url: randomUrl,
@@ -21,6 +25,7 @@ function ajaxRandomCats(){
 
 function getCats(data){
   $(".favs-kitty-container").hide();
+  $("#more").show();
   let kittyContainer = `<div class="kitty-container" id="parent-${data[0]["id"]}"><img src="${data[0]["url"]}"><i id="${data[0]["id"]}" onclick="clickLike(this)" class="icon-heart like"></i></div>`
   $("#kitty-area").append(kittyContainer);
 }
@@ -47,17 +52,25 @@ function clickLike(icon){
 
 function ajaxFavCats(){
   const favsLocalStorage = JSON.parse(localStorage.getItem("id"));
-  favsLocalStorage.forEach(function (value, index) {
-    $.ajax({
-      type: "GET",
-      url: favUrl + value,
-      success: favPages
-    })
-  });
+  if (favsLocalStorage){
+    favsLocalStorage.forEach(function (value, index) {
+      $.ajax({
+        type: "GET",
+        url: favUrl + value,
+        success: favPages
+      })
+    });
+  } else {
+    console.log("ncdsjn")
+    alert("Favorite some kitties to save them for later :)")
+  }
 }
 
 function favPages(data) {
   let favsKittyContainer = `<div class="favs-kitty-container" id="parent-${data["id"]}"><img src="${data["url"]}"><i id="${data["id"]}" onclick="clickLike(this)" class="icon-heart like liked"></i></div>`
   $(".kitty-container").hide();
+  $("#more").hide();
   $("#kitty-area").append(favsKittyContainer);
 }
+
+// some good cats : ["2dp", "5er"]
