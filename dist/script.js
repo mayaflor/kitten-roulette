@@ -8,14 +8,15 @@
 
 const randomUrl = "https://api.thecatapi.com/v1/images/search?460e3088-2a9c-452d-a088-ccbfd2686a96" 
 const favUrl = "https://api.thecatapi.com/v1/images/" 
-const favsLocalStorage = localStorage.getItem("id");
+const favsLocalStorage = JSON.parse(localStorage.getItem("id"));
+console.log(favsLocalStorage)
 
 $(document).ready(() => {
 
   // $("#"+favsLocalStorage).addClass("liked");
 
   page("/", ajaxRandomCats);
-  // page("/favs", ajaxFavCats);
+  page("/favs", ajaxFavCats);
   page();
 
   // function index() {
@@ -44,20 +45,22 @@ $(document).ready(() => {
     $("#kitty-area").append(kittyContainer);
   }
 
-  // function ajaxFavCats(){
-  //   $.ajax({
-  //     type: "GET",
-  //     url: favUrl + favsLocalStorage,
-  //     success: favPages
-  //   })
-  // }
+  function ajaxFavCats(){
+    favsLocalStorage.forEach(function (value, index) {
+      $.ajax({
+        type: "GET",
+        url: favUrl + value,
+        success: favPages
+      })
+    });
 
-  // function favPages(data) {
-  //   console.log(data);
-  //   let favsKittyContainer = `<div class="favs-kitty-container" id="parent-${data["id"]}"><img src="${data["url"]}"><i id="${data["id"]}" onclick="clickLike(this)" class="icon-heart like liked"></i></div>`
+  }
+
+  function favPages(data) {
+    let favsKittyContainer = `<div class="favs-kitty-container" id="parent-${data["id"]}"><img src="${data["url"]}"><i id="${data["id"]}" onclick="clickLike(this)" class="icon-heart like liked"></i></div>`
   
-  //   $("#kitty-area").append(favsKittyContainer);
-  // }
+    $("#kitty-area").append(favsKittyContainer);
+  }
 
 })
 
@@ -65,7 +68,6 @@ function clickLike(icon){
   icon.classList.toggle("liked");
   let getFavs = JSON.parse(localStorage.getItem("id"));
   let catId = $(icon).attr("id");
-  // let jqCatID = "#" + catId;
   let newFavs
 
   if (getFavs) {
@@ -75,31 +77,14 @@ function clickLike(icon){
       newFavs = [ ...getFavs];
       newFavs.splice(index, 1);
     } else{
-      newFavs = [
-        ...getFavs,
-        catId
-      ]
+      newFavs = [ ...getFavs, catId ];
     }
 
   } else {
-    newFavs = [
-      catId
-    ]
+    newFavs = [ catId ];
   }
 
   localStorage.setItem("id", JSON.stringify(newFavs));
-
- 
-
-
-  // let jqCatID = "#"+catId;
-
-
-  // $(jqCatID).toggleClass("liked");
-
-  // if ( !$(jqCatID).hasClass("liked") ){
-  //   localStorage.removeItem("id");
-  // }
 }
 
 
