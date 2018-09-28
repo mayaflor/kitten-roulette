@@ -17,8 +17,16 @@ $(document).ready(() => {
   page("/", ajaxRandomCats);
   page("/favs", ajaxFavCats);
   page();
+
+  // function index() {
+  //   $("#kitty-area").html(ajaxRandomCats());
+  // }
+
+  // function favs() {
+  //   $("#kitty-area").html(ajaxFavCats());
+  // }
   
- function ajaxRandomCats(){
+  function ajaxRandomCats(){
     for(let i=0; i < 4; i++){
       $.ajax({
         type: "GET",
@@ -26,7 +34,7 @@ $(document).ready(() => {
         success: getCats
       })
     }
- }
+  }
 
   function getCats(data){
     console.log(data);
