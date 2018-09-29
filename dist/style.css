@@ -3,6 +3,74 @@
 /* pink: #e5aba5 */
 /* red: #ce5445 */
 
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0 auto;
+  font-family: 'K2D', sans-serif;
+  background-color: #e5aba5;
+}
+
+img {
+  border-radius: 25px;
+  max-width:100%;
+  max-height: 450px;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 100px;
+  background-color: #95ac9e;
+  font-size: 30px;
+  margin-bottom: 25px;
+}
+
+#kitty-area {
+  height: 1800px;
+  max-height: 3000px;
+  display: flex;
+  flex-flow: column wrap;
+  padding: 10px;
+  margin: 0 auto;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.kc {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  border-radius: 25px;
+  align-self: center;
+  border: #a7b06b solid 2px;
+  width: 30vw;
+  background-color: #95ac9e;
+  width: 31%;
+  padding: 10px;
+  margin: 1%;
+  max-height: 500px;
+}
+
+a {
+  margin: 30px;
+  color: #ce5445;
+  text-decoration: none;
+}
+
+.like {
+  color: grey;
+}
+
 .liked {
   color: #ce5445;
+}
+
+.footer {
+  height: 100px;
+  background-color:  #95ac9e;
 }

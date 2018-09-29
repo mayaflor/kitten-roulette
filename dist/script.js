@@ -10,11 +10,11 @@ $(document).ready(() => {
 })
 
 $("#more").click(function() {
-  ajaxRandomCats();
+  $(".kitty-container").hide();
 })
   
 function ajaxRandomCats(){
-  for(let i=0; i < 10; i++){
+  for(let i=0; i < 12; i++){
     $.ajax({
       type: "GET",
       url: randomUrl,
@@ -26,7 +26,7 @@ function ajaxRandomCats(){
 function getCats(data){
   $(".favs-kitty-container").hide();
   $("#more").show();
-  let kittyContainer = `<div class="kitty-container" id="parent-${data[0]["id"]}"><img src="${data[0]["url"]}"><i id="${data[0]["id"]}" onclick="clickLike(this)" class="icon-heart like"></i></div>`
+  let kittyContainer = `<div class="kitty-container kc" id="parent-${data[0]["id"]}"><img src="${data[0]["url"]}"><i id="${data[0]["id"]}" onclick="clickLike(this)" class="icon-heart like"></i></div>`
   $("#kitty-area").append(kittyContainer);
 }
 
@@ -67,7 +67,7 @@ function ajaxFavCats(){
 }
 
 function favPages(data) {
-  let favsKittyContainer = `<div class="favs-kitty-container" id="parent-${data["id"]}"><img src="${data["url"]}"><i id="${data["id"]}" onclick="clickLike(this)" class="icon-heart like liked"></i></div>`
+  let favsKittyContainer = `<div class="favs-kitty-container kc" id="parent-${data["id"]}"><img src="${data["url"]}"><i id="${data["id"]}" onclick="clickLike(this)" class="icon-heart like liked"></i></div>`
   $(".kitty-container").hide();
   $("#more").hide();
   $("#kitty-area").append(favsKittyContainer);
